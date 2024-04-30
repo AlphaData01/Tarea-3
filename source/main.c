@@ -1,34 +1,26 @@
-/*
- * Copyright 2016-2024 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-/**
- * @file    Tarea 3.c
- * @brief   Application entry point.
- */
-
+//Enceder y Apagar un led
+//#include <stdio.h>
 #include <stdint.h>
 #include <MK64F12.h>
 
+
 int main(void){
+	//Registros internos
+	SIM->SCGC5 = 0x00000400; //clock puerto B
+	PORTB->PCR[22] = 0x00000100; //Define como GPIO
+	GPIOB->PDOR = 0x00400000; //Pone un 1 en el pin 22 (valor seguro)
+	GPIOB->PDDR = 0x00400000; //Pone el pin 22 como salida
 
-	SIM->SCGC5 = 0x400;
-	PORTB->PCR[22] = 0x00000100;
-	GPIOB->PDOR = 0x00400000;
-	GPIOB->PDDR = 0x00400000;
-
+	//Lazo infinito
 	while(1){
 		GPIOB->PDOR = 0;
-		printf("RED LED ON\n");
+		//printf("RED LED ON\n");
 
 		GPIOB->PDOR = 0x00400000;
 		GPIOB->PDOR = 0x00000000;
-		GPIOB->PDOR = 0x00200000;
+		GPIOB->PDOR = 0x00400000;
 
-		printf("RED LED OFF\n");
+		//printf("RED LED OFF\n");
 	}
 	return 0;
 }
